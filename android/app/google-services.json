@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970929394585",
+    "project_id": "metamed-e78e4",
+    "storage_bucket": "metamed-e78e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970929394585:android:29ac325c3ed927cd807908",
+        "android_client_info": {
+          "package_name": "com.anonymous.MetamedMobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz_Igq8RCDlSLLGADC-xxorG-uEZkqqmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
