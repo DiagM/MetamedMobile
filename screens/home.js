@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, Linking, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Linking, Alert, TouchableOpacity, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 
 import api from '../utils/api'; // Adjust the path as necessary
@@ -10,7 +9,6 @@ import api from '../utils/api'; // Adjust the path as necessary
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // Light gray background color
     padding: 10,
     paddingTop: 60,
   },
@@ -35,8 +33,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 10,
-
-    backgroundColor: '#ffffff',
+    backgroundColor:  'rgba(255, 255, 255, 0.8)',
     borderRadius: 8,
     elevation: 2,
     shadowColor: '#000',
@@ -78,20 +75,25 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   actionButton: {
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#7d3665',
     padding: 8,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#00008B',
+    borderColor: '#ff5900',
     marginRight: 10,
   },
   buttonText: {
-    color: '#00008B',
+    color: '#ff5900',
   },
   loadingText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#555',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 
@@ -124,7 +126,7 @@ export default function Home() {
   }, []);
 
   const handleDownload = (fileName) => {
-    const fileUrl = `http://192.168.1.34:8000/api/download?url=medical_files/${fileName}`;
+    const fileUrl = `http://192.168.1.44:8000/api/download?url=medical_files/${fileName}`;
     Linking.openURL(fileUrl);
   };
 
@@ -133,8 +135,9 @@ export default function Home() {
       <Text style={styles.cardTitle}>{item.name}</Text>
       <Text style={styles.cardDates}>
         <Text style={styles.cardDate}>{item.date}</Text>
+        <Text style={styles.cardDate}> added by :{item.doctor.name}</Text>
       </Text>
-      <Text style={styles.cardContent}>{item.description}</Text>
+      <Text style={styles.cardContent}>description: {item.description}</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.actionButton} onPress={() => handleDownload(item.file_name)}>
           <Text style={styles.buttonText}>Download</Text>
@@ -145,20 +148,24 @@ export default function Home() {
 
   if (!user) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
+      <ImageBackground source={require('../assets/images/medicalfilebgimage.jpg')} style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </ImageBackground>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={medicalFiles}
-        renderItem={renderMedicalFile}
-        keyExtractor={(item) => item.id.toString()}
-        style={styles.listContainer}
-      />
-    </View>
+    <ImageBackground source={require('../assets/images/medicalfilebgimage.jpg')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <FlatList
+          data={medicalFiles}
+          renderItem={renderMedicalFile}
+          keyExtractor={(item) => item.id.toString()}
+          style={styles.listContainer}
+        />
+      </View>
+    </ImageBackground>
   );
 }

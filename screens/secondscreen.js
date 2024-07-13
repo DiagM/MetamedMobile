@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, FlatList } from 'react-native';
 import api from '../utils/api'; 
 
 const ScheduleScreen = () => {
@@ -33,6 +33,7 @@ const ScheduleScreen = () => {
 
         <View style={[styles.card, { backgroundColor: getColorForLabel(item.label) }]}>
           <Text style={styles.cardTitle}>{item.name}</Text>
+          <Text style={styles.cardTitle}>Type: {item.label}</Text>
           <Text style={styles.cardDate}>{formatDate(item.start_datetime)}</Text>
           <FlatList
             contentContainerStyle={styles.patientListContainer}
@@ -43,6 +44,7 @@ const ScheduleScreen = () => {
           <View style={styles.doctorInfo}>
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{item.doctor.name}</Text>
+              <Text style={styles.userName}>Hospital: {item.doctor.department.hospital.name}</Text>
               <Text style={styles.userRole}>{item.description}</Text>
             </View>
           </View>
@@ -87,14 +89,17 @@ const ScheduleScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-        data={reservations}
-        renderItem={renderClassItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
+    <ImageBackground source={require('../assets/images/appointementbackgroundimage.jpg')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          data={reservations}
+          renderItem={renderClassItem}
+          keyExtractor={(item, index) => index.toString()}
+          // ListHeaderComponent={renderHeader}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -171,13 +176,13 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#ff7f50',
+    backgroundColor: '#7d3665',
     marginBottom: 8,
   },
   timelineLine: {
     flex: 1,
     width: 2,
-    backgroundColor: '#ff7f50',
+    backgroundColor: '#7d3665',
   },
   classContent: {
     flex: 1,
@@ -222,6 +227,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 8,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 

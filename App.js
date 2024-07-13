@@ -80,7 +80,6 @@ async function registerForPushNotificationsAsync() {
         await Notifications.getExpoPushTokenAsync()
       ).data;
 
-
       return pushToken;
     } catch (e) {
       handleRegistrationError(`${e}`);
@@ -89,8 +88,6 @@ async function registerForPushNotificationsAsync() {
     handleRegistrationError('Must use physical device for push notifications');
   }
 }
-
-
 
 export default function App() {
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -153,7 +150,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName={initialRoute}
+        screenOptions={{
+          headerShown: false,
+          headerStyle: { backgroundColor: '#ff5900' }, // Change the header color to orange
+        }}>
         <Stack.Screen name="Login">
           {props => <Login {...props} expoPushToken={expoPushToken} />}
         </Stack.Screen>
@@ -161,8 +163,9 @@ export default function App() {
           {() => (
             <Tab.Navigator
               screenOptions={{
-                tabBarActiveTintColor: '#ff5900',
+                tabBarActiveTintColor: '#7d3665',
                 tabBarInactiveTintColor: '#ffbb6d',
+                tabBarStyle: { backgroundColor: '#ff5900' }, // Change the tab bar background color to orange
               }}>
               <Tab.Screen
                 name="Medical Files"
@@ -179,10 +182,10 @@ export default function App() {
                 }}
               />
               <Tab.Screen
-                name="Reservation"
+                name="Appointment"
                 component={SecondScreen}
                 options={{
-                  tabBarLabel: 'Reservation',
+                  tabBarLabel: 'Appointment',
                   tabBarIcon: ({ focused, color, size }) => (
                     <Ionicons
                       name={focused ? 'alarm' : 'alarm-outline'}

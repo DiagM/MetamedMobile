@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'; // Update imports
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api'; // Adjust the path as necessary
 import { useNavigation } from '@react-navigation/native';
@@ -91,41 +91,46 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{getInitials(user?.name)}</Text>
+    <ImageBackground source={require('../assets/images/profilebgimage.jpg')} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{getInitials(user?.name)}</Text>
+          </View>
+          <View style={styles.informationContainer}>
+            <Text style={styles.name}>{user?.name}</Text>
+            <Text style={styles.label}>{user?.email}</Text>
+            <Text style={styles.label}>licence number: {user?.license_number}</Text>
+            <Text style={styles.label}>contact: {user?.contact}</Text>
+            <Text style={styles.label}>Address: {user?.address}</Text>
+          </View>
         </View>
-        <View style={styles.informationContainer}>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Text style={styles.label}>{user?.email}</Text>
-          <Text style={styles.label}>licence number: {user?.license_number}</Text>
-          <Text style={styles.label}>contact: {user?.contact}</Text>
-          <Text style={styles.label}>Address: {user?.address}</Text>
+
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+              <Text style={styles.logoutButtonText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.sectionBody}>
+            {/* Add your section content here */}
+          </View>
         </View>
       </View>
-
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.sectionBody}>
-
-        </View>
-      </View>
-    </View>
-  )
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // or 'stretch'
   },
   header: {
-    backgroundColor: '#ffa071',
+    backgroundColor: 'rgba(255, 160, 113, 0.3)', // rgba color with 80% opacity
     height: 250,
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
   },
   avatarText: {
     fontSize: 50,
-    color: '#FFF',
+    color: '#7d3665',
   },
   informationContainer: {
     flex: 1,
@@ -176,36 +181,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   logoutButtonText: {
-    color: '#eee'
+    color: '#7d3665'
   },
   sectionBody: {
     marginTop: 10,
-  },
-  sectionScroll: {
-    paddingBottom: 20,
-  },
-  sectionCard: {
-    width: 200,
-    minHeight: 200,
-    backgroundColor: '#fff',
-    shadowColor: '#B0C4DE',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    margin: 10,
-    backgroundColor: '#fff',
-    borderRadius: 6,
-  },
-  sectionImage: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  sectionInfo: {
-    padding: 10,
-  },
-  sectionLabel: {
-    fontSize: 12,
-    marginBottom: 2,
   },
 });
